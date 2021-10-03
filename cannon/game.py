@@ -28,13 +28,15 @@ class Game:
                 self.valid_moves = self.board.get_valid_moves(piece)
 
 
-    def _move(self, row, col, enemy_bool):
-        if enemy_bool:
-            piece = self.board.get_piece(row, col)
-            self.board.remove(piece)
-
-        self.board.move(self.selected, row, col)
+    def _move(self, row, col, target_value):
+        if target_value == 0:
+            self.board.board_state[row][col] = 0
+        else:
+            move_piece = self.board.get_piece(target_value[0], target_value[1])
+            self.board.move(move_piece, row, col)
         self.change_turn()
+        print(self.board.p1_left)
+        print(self.board.p2_left)
 
 
     def draw_valid_moves(self, moves):
