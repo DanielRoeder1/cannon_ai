@@ -1,6 +1,7 @@
 from cannon.constants import WINDOW_HEIGHT, WINDOW_WIDTH, BOARD_CELL_SIZE
 from cannon.game import Game
 import pygame
+from AlphaBeta.algorithm import AlphaBeta
 
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
@@ -36,6 +37,16 @@ def main_loop():
     while run:
         clock.tick(60)
 
+        if game.turn == 1:
+            algorithm = AlphaBeta(game.board)
+            value, new_board = algorithm.minimax(5,True,())
+            print("##########")
+            print(new_board)
+            print("##########")
+            game.ai_move(new_board)
+
+
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -45,7 +56,6 @@ def main_loop():
                 loc = mouse_to_table(pos)
                 if loc:
                     game.select(loc[0], loc[1])
-
 
         game.update()
         pygame.display.update()
