@@ -37,13 +37,20 @@ def main_loop():
     while run:
         clock.tick(60)
 
-        if game.turn == 1:
+        if game.turn == 1 and game.towns_placed == 2:
             algorithm = AlphaBeta(game.board)
-            value, new_board = algorithm.minimax(5,True,())
+            #value, new_board = algorithm.minimax(3,True,())
+            value, new_board = algorithm.alphabeta((), 2,float("-inf"), float("inf"))
+
+            game.move(new_board[0][0], new_board[0][1], new_board[1])
+
+            game.turn =2
             print("##########")
-            print(new_board)
+            print(f"Score: {value}")
+            print(f"Num of Evals: {algorithm.counter}")
+            print(f"Move: {new_board}")
             print("##########")
-            game.ai_move(new_board)
+            #game.ai_move(new_board)
 
 
 

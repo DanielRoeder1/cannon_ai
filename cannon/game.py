@@ -26,7 +26,7 @@ class Game:
         # TODO This might lead to pieces not being able to do anything when they reach the last row: But are they allowed ot do anything?
         if self.towns_placed == 2 and -1 < row < 10:
             if self.selected and (row,col) in self.valid_moves:
-                self._move(row, col, self.valid_moves.get((row,col)))
+                self.move(row, col, self.valid_moves.get((row,col)))
             else:
                 piece = self.board.get_piece((row, col))
                 if piece != 0 and piece == self.turn:
@@ -35,7 +35,6 @@ class Game:
         elif self.towns_placed < 2:
             self.place_town(row,col)
         self.board.get_all_moves(self.turn)
-        print(self.valid_moves)
 
     # TODO: Towns are considered when looking for cannon formations
     def place_town(self, row,col):
@@ -50,7 +49,7 @@ class Game:
             self.turn = 1
             self.valid_moves = {}
 
-    def _move(self, row, col, target_value):
+    def move(self, row, col, target_value):
         #print(self.valid_moves)
         if target_value == 0:
             self.board.board_state[row][col] = 0

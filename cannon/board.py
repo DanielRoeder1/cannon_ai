@@ -11,6 +11,10 @@ class Board:
         self.town_pos = {}
         self.turn = 0
 
+        #Evals
+        self.soldier_capture = 0
+        self.cannon_capture = 0
+
 
     # Initialise pieces on the board
     def init_board(self):
@@ -74,6 +78,8 @@ class Board:
 
     def check_soldier_move(self, row,col):
         found_cannon = False
+        self.soldier_capture = 0
+        self.cannon_capture = 0
         # Ignore moves for the towns
         if (row,col) in self.town_pos:
             return {}, found_cannon
@@ -106,6 +112,7 @@ class Board:
                 if adj_piece != piece:
                     moves[pos] = (row, col)
                     allow_retreat = True
+                    self.soldier_capture+=1
                 else:
                     # Found a friendly in front or side positions -> see if we can combine this to a cannon
                     adj_friendly_pos.append(pos)
@@ -160,6 +167,7 @@ class Board:
                         p = self.get_piece(look_ahead_front_further)
                         if p!=0 and p != piece:
                             moves[look_ahead_front_further] = 0
+                            self.cannon_capture+=1
                         # Only check additional move if the last one was in bounds
                         look_ahead_front_further = self.substract_tuples(look_ahead_front_further, opposite_dir_vec)
                         if self.check_boundary(look_ahead_front_further):
@@ -167,6 +175,7 @@ class Board:
                             # p != piece checks piece color
                             if p!=0 and p != piece:
                                 moves[look_ahead_front_further] = 0
+                                self.cannon_capture+=1
 
                 # Check back
                 if self.check_boundary(look_ahead_back) and self.get_piece(look_ahead_back) == 0:
@@ -179,12 +188,14 @@ class Board:
                         p = self.board_state[look_ahead_back_further[0]][look_ahead_back_further[1]]
                         if p != 0 and p != piece:
                             moves[look_ahead_back_further] = 0
+                            self.cannon_capture += 1
                         # Only check additional move if the last one was in bounds
                         look_ahead_back_further = self.add_tuples(look_ahead_back_further, opposite_dir_vec)
                         if self.check_boundary(look_ahead_back_further):
                             p = self.board_state[look_ahead_back_further[0]][look_ahead_back_further[1]]
                             if p != 0 and p != piece:
                                 moves[look_ahead_back_further] = 0
+                                self.cannon_capture += 1
         return moves
 
 
