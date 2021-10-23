@@ -217,7 +217,9 @@ class Board:
 
         return moves
 
-    def winner(self):
+    def winner(self, board = False):
+        if board:
+            self.board_state = board
         for pos in self.town_pos:
             if self.get_piece(pos) != self.town_pos[pos]:
                 return self.turn

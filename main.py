@@ -40,7 +40,8 @@ def main_loop():
         if game.turn == 1 and game.towns_placed == 2:
             algorithm = AlphaBeta(game.board)
             #value, new_board = algorithm.minimax(3,True,())
-            value, new_board = algorithm.alphabeta((), 2,float("-inf"), float("inf"))
+            #value, new_board = algorithm.alphabeta(4,float("-inf"), float("inf"),1)
+            value, new_board = algorithm.alphabeta_TT(4,float("-inf"), float("inf"),1, algorithm.TT.z_key)
 
             game.move(new_board[0][0], new_board[0][1], new_board[1])
 
