@@ -24,7 +24,7 @@ class AlphaBeta2():
 
         for pos in self.copy_board.get_all_pieces(player_num):
             moves, found_cannon = self.copy_board.get_valid_moves(pos[0], pos[1])
-
+            print(moves)
             # Evlas
             self.num_moves += len(moves)
             self.num_cannons += found_cannon
@@ -37,7 +37,6 @@ class AlphaBeta2():
 
 
     def simulate_move(self, move):
-
         tmp_board = deepcopy(self.copy_board.board_state)
         if move[1] == 0:
             tmp_board[move[0][0]][move[0][1]] = 0

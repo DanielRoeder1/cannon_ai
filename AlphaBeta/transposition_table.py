@@ -35,6 +35,7 @@ class TranspositionTable():
         return z_key
 
 
+
     def update_key(self, key, move, player_num, capture_bool):
         # given a move of form ((x,x),(y,y,)) or ((x,x),0)
         if player_num == 1: enemy_num = 2

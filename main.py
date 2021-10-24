@@ -2,6 +2,11 @@ from cannon.constants import WINDOW_HEIGHT, WINDOW_WIDTH, BOARD_CELL_SIZE
 from cannon.game import Game
 import pygame
 from AlphaBeta.algorithm import AlphaBeta
+from AlphaBeta.algorithm_2 import AlphaBeta2
+from AlphaBeta.Numba_algorithm import alphabeta_TT, TraspositionTable
+from copy import deepcopy
+import numpy as np
+
 
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
@@ -33,17 +38,24 @@ def main_loop():
     run = True
     clock = pygame.time.Clock()
     game = Game(window)
+    tt = TraspositionTable(game.board.board_state)
 
     while run:
         clock.tick(60)
 
         if game.turn == 1 and game.towns_placed == 2:
             algorithm = AlphaBeta(game.board)
+            algorithm2 = AlphaBeta2(game.board)
             #value, new_board = algorithm.minimax(3,True,())
-            #value, new_board = algorithm.alphabeta(4,float("-inf"), float("inf"),1)
-            value, new_board = algorithm.alphabeta_TT(4,float("-inf"), float("inf"),1, algorithm.TT.z_key)
-
-            game.move(new_board[0][0], new_board[0][1], new_board[1])
+            #value, new_board = algorithm.alphabeta(3,float("-inf"), float("inf"),1)
+            tt.clear()
+            town_pos = np.array([[0,0,1],[9,9,2]])
+            print(game.board.board_state)
+            value, new_board = alphabeta_TT(np.array(deepcopy(game.board.board_state)),1,6,float("-inf"), float("inf"), town_pos)
+            #value, new_board = algorithm2.alphabeta(game.board.board_state,2, float("-inf"), float("inf"), 1)
+            #value, new_board = algorithm.alphabeta_TT(4,float("-inf"), float("inf"),1, algorithm.TT.z_key)
+            game.board.board_state = new_board
+            #game.move(new_board[0][0], new_board[0][1], new_board[1])
 
             game.turn =2
             print("##########")

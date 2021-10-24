@@ -92,17 +92,16 @@ class Board:
             self.turn = 2
             direction_mod = -1
 
+        side_positions = [(row, col + i) for i in [-1, 1] if col + i <= BOARD_ROWS - 1 and col + i >= 0]
         # create three frontal postitions for basic move
         front_row = row +direction_mod
         if  front_row <= BOARD_ROWS-1 and  front_row >= 0:
             frontal_positions = [(front_row, col + i) for i in [-1,0,1] if col+i <= BOARD_ROWS-1 and col+i >= 0]
+            side_positions.extend(frontal_positions)
 
-        else: frontal_positions = []
-        side_positions = [(row, col+i) for i in [-1,1] if col+i <= BOARD_ROWS-1 and col+i >= 0]
-        side_positions.extend(frontal_positions)
+
 
         moves = {}
-        adj_friendly_pos = []
         allow_retreat = False
 
         # Check front and side positions -> if we find a friendly look for cannon
@@ -115,7 +114,6 @@ class Board:
                     self.soldier_capture+=1
                 else:
                     # Found a friendly in front or side positions -> see if we can combine this to a cannon
-                    adj_friendly_pos.append(pos)
                     cannon_moves = self.search_cannon2(piece, pos, row, col)
                     if cannon_moves:
                         moves.update(cannon_moves)
@@ -130,12 +128,9 @@ class Board:
             back_row = row - direction_mod
             if back_row <= BOARD_ROWS - 1 and back_row >= 0:
                 back_positions = [(back_row, col + i) for i in [-1, 0, 1] if col + i <= BOARD_ROWS - 1 and col + i >= 0]
-            else:
-                back_positions = []
-
-            for pos in back_positions:
-                adj_piece = self.board_state[pos[0]][pos[1]]
-                if adj_piece != 0 and adj_piece != piece:
+                for pos in back_positions:
+                    adj_piece = self.board_state[pos[0]][pos[1]]
+                    if adj_piece != 0 and adj_piece != piece:
                         allow_retreat = True
 
         if allow_retreat:
