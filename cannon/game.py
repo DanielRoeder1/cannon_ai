@@ -41,6 +41,7 @@ class Game:
         if (row,col) in self.valid_moves:
             self.board.board_state[row][col] = self.towns_placed+1
             self.board.town_pos[(row,col)] = self.towns_placed+1
+            self.board.town_pos_list[self.towns_placed] = [row,col,self.towns_placed+1]
             self.turn = 2
             self.valid_moves = {(9, 0), (9, 1), (9, 2),(9, 3), (9, 4), (9, 5), (9, 6), (9, 7), (9, 8), (9,9)}
             self.towns_placed+=1

@@ -44,14 +44,14 @@ def main_loop():
         clock.tick(60)
 
         if game.turn == 1 and game.towns_placed == 2:
-            algorithm = AlphaBeta(game.board)
+            #algorithm = AlphaBeta(game.board)
             algorithm2 = AlphaBeta2(game.board)
             #value, new_board = algorithm.minimax(3,True,())
             #value, new_board = algorithm.alphabeta(3,float("-inf"), float("inf"),1)
             tt.clear()
-            town_pos = np.array([[0,0,1],[9,9,2]])
-            print(game.board.board_state)
-            value, new_board = alphabeta_TT(np.array(deepcopy(game.board.board_state)),1,6,float("-inf"), float("inf"), town_pos)
+            #town_pos = np.array([[0,0,1],[9,9,2]])
+
+            value, new_board = alphabeta_TT(np.array(deepcopy(game.board.board_state)),1,6,float("-inf"), float("inf"), game.board.town_pos_list)
             #value, new_board = algorithm2.alphabeta(game.board.board_state,2, float("-inf"), float("inf"), 1)
             #value, new_board = algorithm.alphabeta_TT(4,float("-inf"), float("inf"),1, algorithm.TT.z_key)
             game.board.board_state = new_board
@@ -60,7 +60,7 @@ def main_loop():
             game.turn =2
             print("##########")
             print(f"Score: {value}")
-            print(f"Num of Evals: {algorithm.counter}")
+            #print(f"Num of Evals: {algorithm.counter}")
             print(f"Move: {new_board}")
             print("##########")
             #game.ai_move(new_board)

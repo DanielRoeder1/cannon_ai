@@ -9,6 +9,7 @@ class Board:
         self.p2_left = 15
         self.init_board()
         self.town_pos = {}
+        self.town_pos_list = np.zeros((2,3), dtype = np.int32)
         self.turn = 0
 
         #Evals
