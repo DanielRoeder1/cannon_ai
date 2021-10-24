@@ -286,7 +286,10 @@ def alphabeta_TT(board_state, player_num, depth, alpha, beta, town_pos):
             return n[1], n[0]
 
     if depth == 0 or winner(board_state, town_pos):
-        return evaluate(board_state, town_pos), board_state
+        multi = 1
+        if player_num == 2:
+            multi = -1
+        return multi * evaluate(board_state, town_pos), board_state
 
     # Switch players
     if player_num == 1:

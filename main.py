@@ -51,7 +51,7 @@ def main_loop():
             tt.clear()
             #town_pos = np.array([[0,0,1],[9,9,2]])
 
-            value, new_board = alphabeta_TT(np.array(deepcopy(game.board.board_state)),1,6,float("-inf"), float("inf"), game.board.town_pos_list)
+            value, new_board = alphabeta_TT(np.array(deepcopy(game.board.board_state)),1,3,float("-inf"), float("inf"), game.board.town_pos_list)
             #value, new_board = algorithm2.alphabeta(game.board.board_state,2, float("-inf"), float("inf"), 1)
             #value, new_board = algorithm.alphabeta_TT(4,float("-inf"), float("inf"),1, algorithm.TT.z_key)
             game.board.board_state = new_board
